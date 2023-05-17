@@ -1,4 +1,19 @@
 /**
+ * Action creator with createAction
+ */
+
+import {createAction} from "@reduxjs/toolkit"
+
+const action = createAction("bugUpdated");
+console.log(action); // { type: "bugUpdated", payload: undefined }
+console.log(action(1)); // { type: "bugUpdated", payload: 1 }
+console.log(action({id: 1})); // { type: "bugUpdated", payload: { id: 1 } }
+
+
+const bugUpdated = createAction("bugUpdated")
+console.log(bugUpdated.type);
+
+/**
  * Action Types
  * We do not need export Action Types because we only use them in this module
  */
