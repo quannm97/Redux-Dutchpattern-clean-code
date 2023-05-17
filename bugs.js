@@ -46,7 +46,7 @@ export const bugResolved = (id) => ({
 
 let lastId = 0;
 
-export default function reducer(state = [], action) {
+export function reducer(state = [], action) {
     switch (action.type) {
         case BUG_ADDED:
             return [
@@ -65,3 +65,41 @@ export default function reducer(state = [], action) {
             );
     }
 }
+/**
+ * createReducer with tool
+ */
+export default createReducer([],{
+/**
+ * key: value
+ * actions: function (event => event handler)
+ */
+    [bugAdded.type]: (state, action) => {
+        state.push(
+            {
+                id: ++lastId,
+                description: action.payload.description,
+                resolve: false,
+            }
+        )
+    },
+    /*
+        we can change state to bug
+    */
+   /**
+    * 
+    * @param {object} state 
+    * @param {object} action 
+    */
+    [bugResolved.type]: (state, action) => {
+        const index = state.findIndex(bug => bug.id === action.payload.id )
+        state[index].resolved = true;
+    }
+})
+
+/**
+ * the 2nd argument of createReducer is actually draftState argument, agter run thorough Immer lib
+ */
+
+produce(initialState, draftState => {
+    draftState.x = 1;
+})
